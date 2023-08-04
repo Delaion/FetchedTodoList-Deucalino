@@ -5,7 +5,7 @@ const [toDoList,setToDoList]=useState(["Prepare my Bags", "Clean my room","Say G
 const [input,setInput]=useState("");
 
 useEffect (()=>{
-    fetch('https://jsonplaceholder.typicode.com/toDoList')
+    fetch('https://jsonplaceholder.typicode.com/todos')
     .then(response=>{
         if(!response.ok){
             throw Error(response.statusText);
@@ -13,7 +13,7 @@ useEffect (()=>{
         return response.json ();
     })
     .then (responseAsJson=>{
-        setToDoList(responseAsJson.map(t=>t.name));
+        setToDoList(responseAsJson.map(t=>t.title));
     })
     .catch(error=>{
         console.log('Oh...Oooh! Some error in the area,dude:\n',error);
@@ -23,7 +23,7 @@ useEffect (()=>{
 function addToDo (){
     setToDoList(toDoList.concat(input));
 
-    fetch('https://jsonplaceholder.typicode.com/toDoList', {
+    fetch('https://jsonplaceholder.typicode.com/todos', {
         method: 'POST',
         body: JSON.stringify(input),
         headers: {
@@ -51,7 +51,7 @@ const deleteToDo=(i)=>{
         return index !== i
     }));
 
-    fetch('https://jsonplaceholder.typicode.com/toDoList/${index}', {
+    fetch('https://jsonplaceholder.typicode.com/todos/${index}', {
         method: 'DELETE',
         headers:{
             'Content-Type': 'application/json'
